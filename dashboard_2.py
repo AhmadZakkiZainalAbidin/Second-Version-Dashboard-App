@@ -377,6 +377,18 @@ with tab3 :
 
 st.subheader(':round_pushpin: Customer Category Analysis With RFM (All Time)')
 with st.container() :
+    st.markdown(f"<h5 style='text-align: center; color: black;'>Recency, Frequency, and Monetary Info for Top Customer Period </h5>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+    with col1 :
+        mean_recency = round(customer_recency.recency.mean(), 1)
+        st.metric('Average Recency (days)', value=mean_recency)
+    with col2 :
+        mean_frequency = round(customer_frequency.frequency.mean(), 1)
+        st.metric('Average Frequency', value=mean_frequency)
+    with col3 :
+        mean_monetary = round(customer_monetary.monetary.mean(), 2)
+        st.metric("Average Monetary", value="${:,}".format(round(mean_monetary, 2)))
+with st.container() :
     st.markdown(f"<h5 style='text-align: center; color: black;'>Analysis of All Customer Category that use E-commers (2016-2018) based on RFM Score </h5>", unsafe_allow_html=True)    
     #Pivot RFM untuk seluruh dataset customer
     customer_rf = customer_recency.merge(customer_frequency, on='customer_id')
