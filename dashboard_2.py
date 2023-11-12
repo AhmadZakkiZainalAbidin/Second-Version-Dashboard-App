@@ -336,7 +336,7 @@ with tab3 :
     col1, col2= st.columns(2)
     with col1:
         expensive_category_name = grossing_rating2._get_value(0, 'product_category')
-        st.metric("Expensive Product Category", value=str(hingest_revenue_name))
+        st.metric("Expensive Product Category", value=str(expensive_category_name))
     with col2:
         expensive_product_price = grossing_rating2._get_value(0, 'average_price') 
         st.metric('Expensive Product Category Mean Price', value= ("${:,}".format(round(expensive_product_price, 2))))
@@ -349,7 +349,7 @@ with tab3 :
             cheapest_product_price = grossing_rating2.sort_values(by='average_price', ascending=True).reset_index()._get_value(0, 'average_price')
             st.metric('Lowest Total Revenue Product', value= ("${:,}".format(round(cheapest_product_price, 2))))
     with st.container() :
-        fig, ax=plt.subplots(nrows=1, ncols=2, figsize=(20,10))
+        fig, ax=plt.subplots(nrows=1, ncols=2, figsize=(20,10)) 
         colors1 = ["#FFD700", "#ADD8E6", "#ADD8E6", "#ADD8E6", "#ADD8E6"]
         colors2 = ["#FF0000", "#ADD8E6", "#ADD8E6", "#ADD8E6", "#ADD8E6"]
         ax[0]=sns.barplot(x='average_price', y='product_category', data=grossing_rating2.head(), palette=colors1, ax=ax[0])
@@ -388,6 +388,38 @@ with st.container() :
     with col3 :
         mean_monetary = round(customer_monetary.monetary.mean(), 2)
         st.metric("Average Monetary", value="${:,}".format(round(mean_monetary, 2)))
+
+tab1, tab2, tab3 = st.tabs(['By Recency', 'By Frequency', 'By Monetary'])
+with tab1:
+    fig, ax = plt.subplots(figsize=(30, 20))
+    colors = ["#90EE90", "#90EE90", "#90EE90", "#90EE90", "#90EE90"]
+    
+    sns.barplot(y='recency', x='customer_id', data=customer_recency.sort_values(by='recency', ascending=True).head(3).reset_index(), palette=colors)
+    ax.set_ylabel(None)
+    ax.set_xlabel("customer_id", fontsize=30)
+    ax.set_title("Top 3 Lastest Customer By Recency (days)", loc="center", fontsize=40)
+    ax.tick_params(axis='y', labelsize=20)
+    ax.tick_params(axis='x', labelsize=20)
+    st.pyplot(fig)
+with tab2:
+    fig, ax = plt.subplots(figsize=(30, 20))
+    sns.barplot(y="frequency", x="customer_id", data=customer_frequency.sort_values(by="frequency", ascending=False).head(3).reset_index(), palette=colors)
+    ax.set_ylabel(None)
+    ax.set_xlabel("customer_id", fontsize=35)
+    ax.set_title("Top 3 Customer By Frequency", loc="center", fontsize=40)
+    ax.tick_params(axis='y', labelsize=20)
+    ax.tick_params(axis='x', labelsize=20)
+    st.pyplot(fig)
+with tab3:
+    fig, ax = plt.subplots(figsize=(30, 20))
+    sns.barplot(y="monetary", x="customer_id", data=customer_monetary.sort_values(by="monetary", ascending=False).head(3).reset_index(), palette=colors)
+    ax.set_ylabel(None)
+    ax.set_xlabel("customer_id", fontsize=35)
+    ax.set_title("Top 3 Customer By Monetary", loc="center", fontsize=40)
+    ax.tick_params(axis='y', labelsize=20)
+    ax.tick_params(axis='x', labelsize=20)
+    st.pyplot(fig)
+
 with st.container() :
     st.markdown(f"<h5 style='text-align: center; color: black;'>Analysis of All Customer Category that use E-commers (2016-2018) based on RFM Score </h5>", unsafe_allow_html=True)    
     #Pivot RFM untuk seluruh dataset customer
