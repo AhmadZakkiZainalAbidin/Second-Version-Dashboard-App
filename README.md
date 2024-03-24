@@ -1,5 +1,5 @@
 # Second Version Dashboard Streamlit✨
-dashboardapp to see the result go check this streamlit link : https://firstapp-pspfp7upsvx4zxdjvizgms.streamlit.app/
+dashboardapp to see the result go check this streamlit link : https://secondapp-hv7tpie6y7hh5oyjrwyysy.streamlit.app/
 
 # See The First Version Here
 https://github.com/AhmadZakkiZainalAbidin/First-Version-Dashboard-App
